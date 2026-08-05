@@ -4,7 +4,7 @@
 @import "../../../../node_modules/@37signals/lexxy/dist/stylesheets/lexxy.css";
 
 /* Theme Lexxy with Avo's color tokens so the editor and rendered content
-   follow the admin panel's theme, including dark mode. */
+   follow the admin panel's theme. These tokens flip under .dark in avo core. */
 lexxy-editor,
 .lexxy-content {
   --lexxy-color-canvas: var(--color-primary);
@@ -13,6 +13,52 @@ lexxy-editor,
   --lexxy-color-code-bg: var(--color-tertiary);
   --lexxy-color-selected: var(--color-secondary);
   --lexxy-color-selected-hover: var(--color-tertiary);
+}
+
+/* Lexxy derives its chrome (borders, toolbar, dropdowns, prompts) from the
+   ink scale, which has no Avo token equivalent. Avo's dark mode is class
+   driven while lexxy's sandbox reference uses prefers-color-scheme, so mirror
+   the sandbox's dark values (test/dummy sandbox.css in basecamp/lexxy) under
+   Avo's .dark class. */
+.dark lexxy-editor,
+.dark .lexxy-content {
+  --lexxy-color-ink: oklch(96% 0 0);
+  --lexxy-color-ink-medium: oklch(75% 0 0);
+  --lexxy-color-ink-light: oklch(55% 0 0);
+  --lexxy-color-ink-lighter: oklch(40% 0 0);
+  --lexxy-color-ink-lightest: oklch(25% 0 0);
+  --lexxy-color-ink-inverted: oklch(15% 0 0);
+
+  --lexxy-color-accent-dark: oklch(70% 0.30 260);
+  --lexxy-color-accent-medium: oklch(75% 0.196 258);
+  --lexxy-color-accent-light: oklch(45% 0.04 254);
+  --lexxy-color-accent-lightest: oklch(35% 0.04 254);
+
+  --lexxy-color-red: oklch(70% 0.15 27);
+  --lexxy-color-green: oklch(70% 0.15 145);
+  --lexxy-color-blue: oklch(75% 0.196 258);
+  --lexxy-color-purple: oklch(70% 0.15 305);
+
+  --lexxy-color-code-token-att: #ff7b72;
+  --lexxy-color-code-token-comment: #8b949e;
+  --lexxy-color-code-token-function: #d2a8ff;
+  --lexxy-color-code-token-operator: #ff7b72;
+  --lexxy-color-code-token-property: #79c0ff;
+  --lexxy-color-code-token-punctuation: #f0f6fc;
+  --lexxy-color-code-token-selector: #7ee787;
+  --lexxy-color-code-token-variable: #ffa657;
+
+  --lexxy-shadow: 0 0 0 1px rgba(100, 100, 100, 0.3);
+
+  --highlight-1: rgb(240, 200, 22);
+  --highlight-2: rgb(230, 118, 14);
+  --highlight-3: rgb(244, 5, 5);
+  --highlight-4: rgb(248, 21, 192);
+  --highlight-5: rgb(214, 80, 255);
+  --highlight-6: rgb(53, 157, 255);
+  --highlight-7: rgb(26, 231, 23);
+  --highlight-8: rgb(201, 135, 72);
+  --highlight-9: rgb(161, 161, 161);
 }
 
 /* Show view truncation, mirrors avo core's .trix-content.hidden clip. The
