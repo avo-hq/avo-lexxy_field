@@ -1,0 +1,28 @@
+/* Lexxy's own styles, inlined at build time from the npm package pinned in
+   package.json. Keep that pin in the same version family as the lexxy gem
+   dependency in the gemspec. */
+@import "../../../../node_modules/@37signals/lexxy/dist/stylesheets/lexxy.css";
+
+/* Theme Lexxy with Avo's color tokens so the editor and rendered content
+   follow the admin panel's theme, including dark mode. */
+lexxy-editor,
+.lexxy-content {
+  --lexxy-color-canvas: var(--color-primary);
+  --lexxy-color-text: var(--color-content);
+  --lexxy-color-text-subtle: var(--color-content-secondary);
+  --lexxy-color-code-bg: var(--color-tertiary);
+  --lexxy-color-selected: var(--color-secondary);
+  --lexxy-color-selected-hover: var(--color-tertiary);
+}
+
+/* Show view truncation, mirrors avo core's .trix-content.hidden clip. The
+   trix-body controller toggles the hidden class to reveal the full content. */
+.lexxy-content.hidden {
+  display: block !important;
+  overflow: hidden;
+  clip-path: inset(0 0 calc(100% - 50px) 0);
+  -webkit-mask-image: linear-gradient(to bottom, black 30px, transparent 50px);
+  mask-image: linear-gradient(to bottom, black 30px, transparent 50px);
+  max-height: 50px;
+  min-height: 0px;
+}

@@ -1,0 +1,20 @@
+{
+  "name": "avo-lexxy_field",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "repository": "https://github.com/avo-hq/avo-lexxy_field",
+  "author": "Adrian Marin <adrian@adrianthedev.com>",
+  "scripts": {
+    "build": "yarn build:js && yarn build:css",
+    "build:js": "esbuild app/javascript/application.js --bundle --minify --outdir=app/assets/builds/avo-lexxy_field",
+    "build:css": "esbuild app/assets/stylesheets/avo-lexxy_field/application.css --bundle --minify --outfile=app/assets/builds/avo-lexxy_field/application.css"
+  },
+  "dependencies": {
+    "@37signals/lexxy": "^0.9.28",
+    "@rails/activestorage": "^8.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
