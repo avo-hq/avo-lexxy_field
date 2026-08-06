@@ -38,14 +38,14 @@ class Avo::Fields::LexxyField::EditComponent < Avo::Fields::EditComponent
   end
 
   def editor_options
-    {
+    @field.editor_attributes.symbolize_keys.merge(
       id: @form.field_id(@field.id),
       class: class_names("lexxy-content", @field.get_html(:classes, view: view, element: :input)),
       placeholder: @field.placeholder,
       disabled: disabled?,
       data: @field.get_html(:data, view: view, element: :input),
       style: @field.get_html(:style, view: view, element: :input)
-    }.tap do |options|
+    ).tap do |options|
       options[:attachments] = "false" if @field.attachments_disabled
     end
   end

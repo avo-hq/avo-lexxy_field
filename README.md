@@ -35,15 +35,48 @@ field :body, as: :lexxy
 | `always_show` | `false` | Show the full content on the show view instead of the truncated preview. |
 | `attachments_disabled` | `false` for Action Text attributes, `true` otherwise | Disable file attachments. Lexxy uploads through Active Storage direct uploads and relies on Action Text to attach the blobs, so plain columns have attachments disabled by default to avoid orphaned blobs. |
 
+### Editor configuration
+
+Lexxy's [editor options](https://lexxy.dev/docs/) are field options too. They land on the `<lexxy-editor>` element, which is where Lexxy reads them from:
+
+```ruby
+field :body, as: :lexxy,
+  preset: :comment,
+  markdown: false,
+  headings: %w[h2 h3],
+  permitted_attachment_types: %w[image/png image/jpeg]
+```
+
+| Option | Description |
+| ------ | ----------- |
+| `preset` | Name of a preset registered with `Lexxy.configure`. |
+| `markdown` | Markdown shortcuts while typing. |
+| `rich_text` | Rich text at all — `false` gives you a plain text editor. |
+| `multi_line` | Whether Enter creates a new paragraph. |
+| `headings` | Heading levels the toolbar offers. |
+| `toolbar` | Toolbar configuration. |
+| `highlight` | Highlight colors. |
+| `permitted_attachment_types` | Content types accepted for upload. |
+
+Anything that isn't a string is passed as JSON, which is what Lexxy parses it back from. Use `attachments_disabled` rather than Lexxy's `attachments` — it also hides the media library button.
+
+To configure Lexxy globally — presets, extensions, `attachmentTagName` — call `Lexxy.configure` when this gem's bundle announces itself. Avo's layout doesn't load your app's JavaScript, and Lexxy defines its elements immediately after this bundle runs, so the callback is the only point early enough:
+
+```erb
+<%# app/views/avo/partials/_head.html.erb %>
+<script>
+  document.addEventListener("avo:lexxy:configure", (event) => {
+    event.detail.configure({
+      comment: {markdown: true, headings: ["h3"], toolbar: {upload: "file"}},
+      global: {authenticatedUploads: true}
+    })
+  })
+</script>
+```
+
 ### Media Library
 
 When Avo's [Media Library](https://docs.avohq.io/4.0/media-library.html) is enabled, the toolbar gets a button that opens the library in a modal. Picking an asset inserts it into the content — images as Action Text attachments, other files as links. The button is hidden when the field has attachments disabled.
-
-Lexxy element attributes (`markdown`, `rich-text`, `headings`, `preset`, `permitted-attachment-types`, etc.) can be passed through the field's `html` option:
-
-```ruby
-field :body, as: :lexxy, html: {edit: {input: {data: {}, classes: ""}}}
-```
 
 ## Development
 

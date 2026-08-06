@@ -2,6 +2,21 @@ module Avo
   module LexxyField
     module Fields
       class LexxyField < Avo::Fields::BaseField
+        # Lexxy's per-editor options, which it reads off the element as
+        # dasherized attributes and JSON-parses. `attachments` is omitted on
+        # purpose — `attachments_disabled` below owns it. See
+        # https://lexxy.dev/docs/ for what each one takes.
+        EDITOR_OPTIONS = %i[
+          preset
+          markdown
+          rich_text
+          multi_line
+          headings
+          toolbar
+          highlight
+          permitted_attachment_types
+        ].freeze
+
         attr_reader :always_show
 
         def initialize(id, **args, &block)
@@ -11,6 +26,15 @@ module Avo
 
           @always_show = args[:always_show] || false
           @attachments_disabled = args[:attachments_disabled]
+          @editor_options = args.slice(*EDITOR_OPTIONS)
+        end
+
+        # The editor options as element attributes. Anything that isn't already
+        # a string goes over as JSON, which is what Lexxy parses it back from.
+        def editor_attributes
+          @editor_options.to_h do |name, value|
+            [name.to_s.dasherize, value.is_a?(String) || value.is_a?(Symbol) ? value.to_s : value.to_json]
+          end
         end
 
         # Identify if field is bonded to a rich text model attribute

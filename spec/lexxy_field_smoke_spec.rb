@@ -24,6 +24,25 @@ RSpec.describe "Lexxy field", type: :request do
     expect(response.body).to include 'name="playground[trix_content]"'
   end
 
+  # Run this one with the field declared as
+  # `field :trix_content, as: :lexxy, markdown: false, headings: %w[h2 h3], preset: :comment`.
+  it "renders the editor options as element attributes" do
+    get "/admin/resources/playgrounds/#{playground.id}/edit"
+
+    expect(response.body).to include 'markdown="false"'
+    expect(response.body).to include 'headings="[&quot;h2&quot;,&quot;h3&quot;]"'
+    # A preset is a plain name, not JSON — Lexxy reads it off the element raw.
+    expect(response.body).to include 'preset="comment"'
+  end
+
+  it "renders the media library button pointing back at this field" do
+    get "/admin/resources/playgrounds/#{playground.id}/edit"
+
+    expect(response.body).to include 'data-controller="lexxy-field"'
+    expect(response.body).to match(/attach-media\?controller_name=lexxy-field/)
+    expect(response.body).to match(/controller_selector=.*unique-selector/)
+  end
+
   it "renders the content on show" do
     get "/admin/resources/playgrounds/#{playground.id}"
 
