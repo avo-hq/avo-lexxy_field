@@ -72,3 +72,9 @@ lexxy-editor,
   max-height: 50px;
   min-height: 0px;
 }
+
+/* The media library button is an Avo (tabler) icon, which is stroked rather
+   than filled, while Lexxy fills every toolbar icon with currentColor. */
+.lexxy-field__media-library-button svg {
+  fill: none;
+}

@@ -35,6 +35,10 @@ field :body, as: :lexxy
 | `always_show` | `false` | Show the full content on the show view instead of the truncated preview. |
 | `attachments_disabled` | `false` for Action Text attributes, `true` otherwise | Disable file attachments. Lexxy uploads through Active Storage direct uploads and relies on Action Text to attach the blobs, so plain columns have attachments disabled by default to avoid orphaned blobs. |
 
+### Media Library
+
+When Avo's [Media Library](https://docs.avohq.io/4.0/media-library.html) is enabled, the toolbar gets a button that opens the library in a modal. Picking an asset inserts it into the content — images as Action Text attachments, other files as links. The button is hidden when the field has attachments disabled.
+
 Lexxy element attributes (`markdown`, `rich-text`, `headings`, `preset`, `permitted-attachment-types`, etc.) can be passed through the field's `html` option:
 
 ```ruby

@@ -1,5 +1,18 @@
 <%= field_wrapper(**field_wrapper_args, full_width: true) do %>
-  <div class="relative block w-full max-w-4xl">
+  <%= content_tag :div,
+    class: "relative block w-full max-w-4xl",
+    data: {controller: ("lexxy-field" if media_library?), unique_selector: unique_id}.compact do %>
     <%= editor_tag %>
-  </div>
+    <% if media_library? %>
+      <%# Lexxy builds its toolbar client side, so there is no slot to render
+          into — the controller moves this button in once the editor boots. %>
+      <%= link_to media_library_path,
+        class: "lexxy-editor__toolbar-button lexxy-field__media-library-button",
+        title: t("avo.media_library.title"),
+        hidden: true,
+        data: {lexxy_field_target: "mediaLibraryButton", turbo_frame: ::Avo::MODAL_FRAME_ID} do %>
+        <%= helpers.svg "tabler/outline/photo-star" %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>

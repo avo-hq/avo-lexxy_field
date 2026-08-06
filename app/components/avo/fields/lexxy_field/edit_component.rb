@@ -12,6 +12,25 @@ class Avo::Fields::LexxyField::EditComponent < Avo::Fields::EditComponent
     end
   end
 
+  # A picked blob lands in the content as an attachment, so a field with
+  # attachments disabled has nowhere to put it.
+  def media_library?
+    !@field.attachments_disabled && Avo::MediaLibrary.configuration.visible?
+  end
+
+  def media_library_path
+    helpers.avo.attach_media_path(
+      controller_selector: unique_selector,
+      controller_name: "lexxy-field"
+    )
+  end
+
+  def unique_id
+    @unique_id ||= "lexxy_#{@field.id}_#{SecureRandom.hex(4)}"
+  end
+
+  def unique_selector = "[data-unique-selector=#{unique_id}]"
+
   private
 
   def field_name
