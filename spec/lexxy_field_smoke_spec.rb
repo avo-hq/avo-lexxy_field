@@ -35,6 +35,14 @@ RSpec.describe "Lexxy field", type: :request do
     expect(response.body).to include 'preset="comment"'
   end
 
+  # The editor needs the whole row, not the narrow content column a side-by-side
+  # wrapper leaves it. `full_width` alone only widens within that column.
+  it "stacks the wrapper by default" do
+    get "/admin/resources/playgrounds/#{playground.id}/edit"
+
+    expect(response.body).to include "field-wrapper--stacked"
+  end
+
   it "renders the media library button pointing back at this field" do
     get "/admin/resources/playgrounds/#{playground.id}/edit"
 
