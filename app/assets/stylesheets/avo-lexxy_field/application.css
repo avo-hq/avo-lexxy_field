@@ -78,3 +78,20 @@ lexxy-editor,
 .lexxy-field__media-library-button svg {
   fill: none;
 }
+
+/* Lexxy's toolbar hover/focus styles only target `button` and `summary`;
+   this button is a link, so mirror them. */
+.lexxy-field__media-library-button {
+  background: var(--lexxy-color-canvas);
+
+  @media (any-hover: hover) {
+    &:hover {
+      background: var(--lexxy-color-ink-lightest);
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--lexxy-focus-ring-size) solid var(--lexxy-focus-ring-color);
+    outline-offset: var(--lexxy-focus-ring-offset);
+  }
+}
