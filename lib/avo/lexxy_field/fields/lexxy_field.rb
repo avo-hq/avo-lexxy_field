@@ -24,11 +24,6 @@ module Avo
 
           hide_on :index
 
-          # A rich text editor needs the whole row. `full_width` on the wrapper
-          # only widens it inside the side-by-side content column, so stack it
-          # too — `stacked: false` still opts back out.
-          @stacked = args.fetch(:stacked, true)
-
           @always_show = args[:always_show] || false
           @attachments_disabled = args[:attachments_disabled]
           @editor_options = args.slice(*EDITOR_OPTIONS)
