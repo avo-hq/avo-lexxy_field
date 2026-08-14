@@ -1,6 +1,6 @@
 <%= field_wrapper(**field_wrapper_args, full_width: true) do %>
   <%= content_tag :div,
-    class: "relative block w-full",
+    class: "lexxy-field relative block w-full",
     data: {controller: ("lexxy-field" if media_library?), unique_selector: unique_id}.compact do %>
     <%= editor_tag %>
     <% if media_library? %>
