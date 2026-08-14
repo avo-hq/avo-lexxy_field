@@ -2,6 +2,9 @@ module Avo
   module LexxyField
     module Fields
       class LexxyField < Avo::Fields::BaseField
+        # Avo >= 4.2 lets the editor viewport be resized with a persisted height.
+        resizable_editor target: "lexxy-editor > .lexxy-editor__content" if respond_to?(:resizable_editor)
+
         # Lexxy's per-editor options, which it reads off the element as
         # dasherized attributes and JSON-parses. `attachments` is omitted on
         # purpose — `attachments_disabled` below owns it. See
@@ -23,11 +26,6 @@ module Avo
           super(id, **args, &block)
 
           hide_on :index
-
-          # A rich text editor needs the whole row. `full_width` on the wrapper
-          # only widens it inside the side-by-side content column, so stack it
-          # too — `stacked: false` still opts back out.
-          @stacked = args.fetch(:stacked, true)
 
           @always_show = args[:always_show] || false
           @attachments_disabled = args[:attachments_disabled]

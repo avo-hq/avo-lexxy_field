@@ -32,8 +32,7 @@ field :body, as: :lexxy
 
 | Option | Default | Description |
 | ------ | ------- | ----------- |
-| `always_show` | `false` | Show the full content on the show view instead of the truncated preview. |
-| `stacked` | `true` | Render the label above the editor so it spans the full row. Pass `false` for the side-by-side layout the other fields use. |
+| `always_show` | `false` | Show the full content on the show view instead of the collapsed More/Less preview. |
 | `attachments_disabled` | `false` for Action Text attributes, `true` otherwise | Disable file attachments. Lexxy uploads through Active Storage direct uploads and relies on Action Text to attach the blobs, so plain columns have attachments disabled by default to avoid orphaned blobs. |
 
 ### Editor configuration
