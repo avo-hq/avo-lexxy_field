@@ -1,12 +1,24 @@
+/* The canonical layer order every Avo stylesheet declares. This build used to
+   ship unlayered, which made every rule here outrank all layered CSS on the
+   page — including other gems' Lexxy overrides (avo-ai strips the editor
+   chrome for its chat composer and this sheet, loading later, painted it back
+   on). Layered into `components`, cascade resolution is by specificity again. */
+@layer theme, base, components, utilities;
+
 /* Lexxy's own styles, inlined at build time from the npm package pinned in
    package.json. Keep that pin in the same version family as the lexxy gem
    dependency in the gemspec. */
-@import "../../../../node_modules/@37signals/lexxy/dist/stylesheets/lexxy.css";
+@import "../../../../node_modules/@37signals/lexxy/dist/stylesheets/lexxy.css" layer(components);
+
+@layer components {
 
 /* Theme Lexxy with Avo's color tokens so the editor and rendered content
-   follow the admin panel's theme. These tokens flip under .dark in avo core. */
-lexxy-editor,
-.lexxy-content {
+   follow the admin panel's theme. These tokens flip under .dark in avo core.
+   Set on this gem's own field wrapper (both components render it), never on
+   bare lexxy-editor/.lexxy-content: a custom property set directly on the
+   element beats one another gem inherits down to it, whatever the selectors'
+   specificity — which is how this sheet repainted avo-ai's chat composer. */
+.lexxy-field {
   --lexxy-color-canvas: var(--color-primary);
   --lexxy-color-text: var(--color-content);
   --lexxy-color-text-subtle: var(--color-content-secondary);
@@ -20,8 +32,7 @@ lexxy-editor,
    driven while lexxy's sandbox reference uses prefers-color-scheme, so mirror
    the sandbox's dark values (test/dummy sandbox.css in basecamp/lexxy) under
    Avo's .dark class. */
-.dark lexxy-editor,
-.dark .lexxy-content {
+.dark .lexxy-field {
   --lexxy-color-ink: oklch(96% 0 0);
   --lexxy-color-ink-medium: oklch(75% 0 0);
   --lexxy-color-ink-light: oklch(55% 0 0);
@@ -94,4 +105,6 @@ lexxy-editor,
     outline: var(--lexxy-focus-ring-size) solid var(--lexxy-focus-ring-color);
     outline-offset: var(--lexxy-focus-ring-offset);
   }
+}
+
 }
