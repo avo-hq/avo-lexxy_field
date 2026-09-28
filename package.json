@@ -11,7 +11,7 @@
     "build:css": "esbuild app/assets/stylesheets/avo-lexxy_field/application.css --bundle --minify --outfile=app/assets/builds/avo-lexxy_field/application.css"
   },
   "dependencies": {
-    "@37signals/lexxy": "^0.9.28",
+    "@37signals/lexxy": "^1.0.0",
     "@hotwired/stimulus": "^3.2.2",
     "@rails/activestorage": "^8.0.0"
   },

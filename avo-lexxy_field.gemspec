@@ -22,5 +22,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "avo", ">= 4.0"
   # Lexxy requires Rails >= 8.0.2, so this field does too.
-  spec.add_dependency "lexxy", ">= 0.9"
+  spec.add_dependency "lexxy", ">= 1.0", "< 2.0"
 end
