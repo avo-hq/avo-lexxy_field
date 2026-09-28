@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    avo-lexxy_field (0.2.0)
+    avo-lexxy_field (0.3.0)
       avo (>= 4.0)
       lexxy (>= 1.0, < 2.0)
 
